@@ -7,16 +7,16 @@ import click_log
 # Import before importing any "internal" modules so that logging is configured
 # consistently for all modules
 logger = click_log.basic_config()
+logger.setLevel(logging.INFO)
 
 from gh_release_info_lib.commands import list_releases
-
-DEFAULT_GITHUB_API_ENDPOINT = "https://api.github.com"
+import gh_release_info_lib
 
 
 @click.group()
 @click.option("-a", "--api-endpoint",
               metavar="URL",
-              default=DEFAULT_GITHUB_API_ENDPOINT,
+              default=gh_release_info_lib.GITHUB_API_ENDPOINT,
               show_default=True,
               envvar="GITHUB_API_ENDPOINT",
               help=("GitHub API endpoint; may also be set with "
@@ -34,8 +34,8 @@ DEFAULT_GITHUB_API_ENDPOINT = "https://api.github.com"
               )
 @click.pass_context
 def cli(ctx, **kwargs):
-    for key, value in kwargs.items():
-        ctx.obj[key] = value
+    gh_release_info_lib.GITHUB_API_ENDPOINT = kwargs["api_endpoint"]
+    gh_release_info_lib.GITHUB_TOKEN = kwargs["token"]
 
 
 @cli.command()
@@ -50,13 +50,9 @@ def cli(ctx, **kwargs):
               help="Display additional information about releases."
               )
 @click.pass_context
-@click_log.simple_verbosity_option(logger)
 def list(ctx, repository, verbose):
     """List all releases for a GitHub project."""
-    endpoint = ctx.obj.get("api_endpoint")
-    token = ctx.obj.get("token")
-
-    list_releases(repository, token, endpoint, verbose=verbose)
+    list_releases(repository, verbose=verbose)
 
 
 if __name__ == "__main__":

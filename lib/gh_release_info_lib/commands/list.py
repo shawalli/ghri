@@ -3,13 +3,14 @@ import logging
 
 from github import Github
 
+from gh_release_info_lib import GITHUB_API_ENDPOINT, GITHUB_TOKEN
 from gh_release_info_lib.output import print_wrapped
 
 logger = logging.getLogger(__name__)
 
 
-def list_releases(repository, token, api_endpoint, verbose=False):
-    g = Github(base_url=api_endpoint, login_or_token=token)
+def list_releases(repository, verbose=False):
+    g = Github(base_url=GITHUB_API_ENDPOINT, login_or_token=GITHUB_TOKEN)
 
     releases = g.get_repo(repository).get_releases()
     if not releases:
