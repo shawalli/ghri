@@ -37,6 +37,7 @@ import ghri
               help=("GitHub access token; may also be set with GITHUB_TOKEN "
                     "environmental variable.")
               )
+@click.version_option()
 @click.pass_context
 def cli(ctx, **kwargs):
     """Display information about GitHub releases."""
