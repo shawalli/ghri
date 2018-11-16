@@ -24,8 +24,8 @@ setup(
         "Click",
         "click-didyoumean",
         "click-log",
-        "PyGithub",
         "marshmallow",
+        "PyGithub",
         "requests"
     ],
     entry_points="""
