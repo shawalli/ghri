@@ -2,17 +2,17 @@ import logging
 
 from github import Github
 
-from ghrilib.output import print_wrapped
-from ghrilib.schema import ReleaseSchema
-import ghrilib
+from ghri.output import print_wrapped
+from ghri.schema import ReleaseSchema
+import ghri
 
 logger = logging.getLogger(__name__)
 
 
 def list_releases(repository, verbose=False, json_output=False):
     g = Github(
-        base_url=ghrilib.GITHUB_API_ENDPOINT,
-        login_or_token=ghrilib.GITHUB_TOKEN
+        base_url=ghri.GITHUB_API_ENDPOINT,
+        login_or_token=ghri.GITHUB_TOKEN
     )
 
     releases = g.get_repo(repository).get_releases()
