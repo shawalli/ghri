@@ -39,6 +39,7 @@ import gh_release_info_lib
               )
 @click.pass_context
 def cli(ctx, **kwargs):
+    """Display information about GitHub releases."""
     gh_release_info_lib.GITHUB_API_ENDPOINT = kwargs["api_endpoint"]
     gh_release_info_lib.GITHUB_TOKEN = kwargs["token"]
 
