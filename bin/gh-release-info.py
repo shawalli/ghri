@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import json
 import logging
 import sys
@@ -56,7 +57,7 @@ def cli(ctx, **kwargs):
 @click.option("--json", "json_output",
               default=False,
               is_flag=True,
-              help=("Output will be JSON.")
+              help=("Format output as JSON.")
               )
 @click.pass_context
 def list(ctx, repository, verbose, json_output):
@@ -89,7 +90,7 @@ def list(ctx, repository, verbose, json_output):
 @click.option("--json", "json_output",
               default=False,
               is_flag=True,
-              help=("Output will be JSON.")
+              help=("Format output as JSON.")
               )
 @click.pass_context
 def show(ctx, repository, key, key_type, json_output):
