@@ -1,7 +1,7 @@
 from attrdict import AttrDict
 from marshmallow import fields, post_dump, Schema
 
-from gh_release_info_lib.output import print_wrapped
+from ghrilib.output import print_wrapped
 
 
 class AuthorSchema(Schema):

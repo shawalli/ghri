@@ -13,15 +13,15 @@ import click_log
 logger = click_log.basic_config()
 logger.setLevel(logging.INFO)
 
-from gh_release_info_lib.commands import list_releases, show_release
-from gh_release_info_lib.output import set_log_level
-import gh_release_info_lib
+from ghrilib.commands import list_releases, show_release
+from ghrilib.output import set_log_level
+import ghrilib
 
 
 @click.group(cls=DYMGroup)
 @click.option("-a", "--api-endpoint",
               metavar="URL",
-              default=gh_release_info_lib.GITHUB_API_ENDPOINT,
+              default=ghrilib.GITHUB_API_ENDPOINT,
               show_default=True,
               envvar="GITHUB_API_ENDPOINT",
               help=("GitHub API endpoint; may also be set with "
@@ -40,8 +40,8 @@ import gh_release_info_lib
 @click.pass_context
 def cli(ctx, **kwargs):
     """Display information about GitHub releases."""
-    gh_release_info_lib.GITHUB_API_ENDPOINT = kwargs["api_endpoint"]
-    gh_release_info_lib.GITHUB_TOKEN = kwargs["token"]
+    ghrilib.GITHUB_API_ENDPOINT = kwargs["api_endpoint"]
+    ghrilib.GITHUB_TOKEN = kwargs["token"]
 
 
 @cli.command()
