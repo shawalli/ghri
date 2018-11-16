@@ -1,4 +1,3 @@
-
 import logging
 
 from github import Github
@@ -48,7 +47,7 @@ def list_releases(repository, verbose=False):
                 indent_level=indent_level
             )
             print_wrapped(
-                "- Commit: {}".format(release.target_commitish),
+                "- Commitish: {}".format(release.target_commitish),
                 logger=logger,
                 indent_level=indent_level
             )
@@ -72,3 +71,5 @@ def list_releases(repository, verbose=False):
                 logger=logger,
                 indent_level=(indent_level + 2)
             )
+
+    return True
