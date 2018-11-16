@@ -1,4 +1,16 @@
 from textwrap import wrap
+import logging
+
+
+def set_log_level(level):
+    level = level.upper()
+
+    log_level = getattr(logging, level)
+
+    logging.root.setLevel(level)
+    for logger in logging.Logger.manager.loggerDict.values():
+        if not isinstance(logger, logging.PlaceHolder):
+            logger.setLevel(level)
 
 
 def wrap_text(text, indent_level=0, subsequent_indent=True):

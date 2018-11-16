@@ -1,3 +1,4 @@
+import json
 import logging
 import sys
 
@@ -12,6 +13,7 @@ logger = click_log.basic_config()
 logger.setLevel(logging.INFO)
 
 from gh_release_info_lib.commands import list_releases, show_release
+from gh_release_info_lib.output import set_log_level
 import gh_release_info_lib
 
 
@@ -51,10 +53,22 @@ def cli(ctx, **kwargs):
               is_flag=True,
               help="Display additional information about releases."
               )
+@click.option("--json", "json_output",
+              default=False,
+              is_flag=True,
+              help=("Output will be JSON.")
+              )
 @click.pass_context
-def list(ctx, repository, verbose):
+def list(ctx, repository, verbose, json_output):
     """List all releases for a GitHub project."""
-    result = list_releases(repository, verbose=verbose)
+    if json_output:
+        set_log_level("error")
+
+    result = list_releases(repository, verbose=verbose, json_output=json_output)
+    if json_output is True and result is not False:
+        set_log_level("info")
+        logger.info(json.dumps(result))
+        result = True
 
     exit_cli(result)
 
@@ -72,10 +86,22 @@ def list(ctx, repository, verbose):
               show_default=True,
               help="Type of key with which to query."
               )
+@click.option("--json", "json_output",
+              default=False,
+              is_flag=True,
+              help=("Output will be JSON.")
+              )
 @click.pass_context
-def show(ctx, repository, key, key_type):
+def show(ctx, repository, key, key_type, json_output):
     """Show information about KEY release."""
-    result = show_release(repository, key, key_type)
+    if json_output:
+        set_log_level("error")
+
+    result = show_release(repository, key, key_type, json_output=json_output)
+    if json_output is True and result is not False:
+        set_log_level("info")
+        logger.info(json.dumps(result))
+        result = True
 
     exit_cli(result)
 

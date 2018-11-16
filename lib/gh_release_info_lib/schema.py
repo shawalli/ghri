@@ -5,23 +5,25 @@ from gh_release_info_lib.output import print_wrapped
 
 
 class AuthorSchema(Schema):
-    name = fields.Str()
-    email = fields.Str()
+    name = fields.String()
+    email = fields.String()
 
 
 class ReleaseSchema(Schema):
-    title = fields.Str()
-    tag_name = fields.Str()
+    title = fields.String()
+    tag_name = fields.String()
     author = fields.Nested(AuthorSchema)
-    created_at = fields.Str()
-    published_at = fields.Str()
-    target_commitish = fields.Str()
-    draft = fields.Str()
-    prerelease = fields.Str()
-    description = fields.Str(attribute="body")
+    created_at = fields.String()
+    published_at = fields.String()
+    target_commitish = fields.String()
+    draft = fields.Boolean()
+    prerelease = fields.Boolean()
+    description = fields.String(attribute="body")
 
     @post_dump
     def to_attrdict(self, data):
+        data["description"] = data["description"].rstrip("\r\n")
+
         return AttrDict(data)
 
     @staticmethod

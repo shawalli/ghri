@@ -9,7 +9,7 @@ from gh_release_info_lib.schema import ReleaseSchema
 logger = logging.getLogger(__name__)
 
 
-def show_release(repository, key, key_type):
+def show_release(repository, key, key_type, json_output=False):
     g = Github(base_url=GITHUB_API_ENDPOINT, login_or_token=GITHUB_TOKEN)
 
     releases = g.get_repo(repository).get_releases()
@@ -37,4 +37,7 @@ def show_release(repository, key, key_type):
     release_structured = ReleaseSchema().dump(release)
     ReleaseSchema.print_long(release_structured.data, logger)
 
-    return True
+    if json_output:
+        return release_structured.data
+    else:
+        return True
